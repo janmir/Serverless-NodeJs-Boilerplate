@@ -55,10 +55,14 @@ const fn = {
   sexyback: (events, response) => {
     if(fn.callback !== null){
       console.log("---------Response-----------");            
-      console.log(response);
 
       //add performance
       response.execution = fn.perfEnd();
+
+      //Log only in deploy stage
+      if(DEPLOY){
+        console.log(response);      
+      }
 
       fn.callback(null, response);
     }else{
@@ -221,6 +225,20 @@ const fn = {
     let indentedJson = JSON.stringify(config, null, 4);
 
     return JSON.parse(indentedJson);
+  },
+  callLambda: (fn, data)=>{
+    let lambda = new aws.Lambda();
+    
+    lambda.invoke({
+      FunctionName: fn,
+      Payload: JSON.stringify(data)
+    }, function(error, data) {
+      if(!err){ 
+        let obj = data.Payload;
+      }else{
+        throw {message:err.message};
+      } 
+    });
   }
 };
 
@@ -228,7 +246,7 @@ const fn = {
 module.exports.main = (events, context, callback) => {
   console.log("----------Request-----------");
   console.log(events);
-  console.log("------------Logs------------");      
+  console.log("-----------Logs-------------");      
   
   //performance check start
   fn.perfStart();

@@ -18,10 +18,10 @@ functions:
       DEBUG: true
       BUCKET: jp.holidays
       YAML_FILE: config.yaml
-      EMAIL: paulzu100@gmail.com
-      EMAIL_REGION: us-east-1
       JSON_FILE: jp.json
       SEND_MAIL: false
+      EMAIL: paulzu100@gmail.com
+      EMAIL_REGION: us-east-1
     tags:
       type: public
 
@@ -29,3 +29,4 @@ package:
   exclude:
     - README.md
     - event.json
+    - .gitignore
